@@ -3,7 +3,9 @@ from tensorflow import keras
 
 class ListenToLoss(keras.callbacks.Callback):
 
-    """Args:
+    """
+    Sonifies validation loss when run on epoch or training loss when run on batch.
+    Args:
             osc: pyo oscillator object for sonifying the cur_loss (required)
             hear_on: after each 'batch' or 'epoch'
             min_freq, max_freq: range of frequency for sonification
@@ -21,7 +23,10 @@ class ListenToLoss(keras.callbacks.Callback):
 
     def _hear_loss(self, logs):
 
-        cur_loss = logs["loss"]
+        if 'val_loss' in logs:
+            cur_loss = logs['val_loss']
+        else:
+            cur_loss = logs['loss']
         #set first loss as maximum loss value
         if self.cur_step == 0:
             self.max_loss = cur_loss
@@ -35,6 +40,7 @@ class ListenToLoss(keras.callbacks.Callback):
         else:
             norm_loss = float(self.min_freq + (cur_loss - 0)/(self.max_loss - 0) * (self.max_freq-self.min_freq))
 
+        # print(norm_loss)
         self.osc.setFreq(norm_loss)
 
     def on_train_batch_end(self, batch, logs=None):
