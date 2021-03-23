@@ -15,7 +15,6 @@ class ListenToLoss(keras.callbacks.Callback):
     """
     Sonifies validation loss when run on epoch or training loss when run on batch.
     Args:
-            osc: pyo oscillator object for sonifying the cur_loss (required)
             hear_on: after each 'batch' or 'epoch'
             min_freq, max_freq: range of frequency for sonification
     """
@@ -68,8 +67,8 @@ class ListenToLoss(keras.callbacks.Callback):
 
 def gen_harmonies(n_streams, base_freq=200, ratio=[1,4,5,6]):
 
-    """Generate harmonies for as many streams as needed. Obviously limited by range of reasonable frequenciesself.
-    Used during weights sonificationself.
+    """Generate harmonies for as many streams as needed. Obviously limited by range of reasonable frequencies.
+    Used during weights sonification.
     Args:
         base_freq: Basic frequency to build on.
         ratio: List with ratios for frequencies. Should start with 1.
@@ -105,6 +104,9 @@ class WeightsDense(keras.callbacks.Callback):
     The weights are averaged for each neuron.
     Frequency shifts after each epoch depend on how much the weights have changed during the last epoch.
     Oscillations created with an LFO depend on the amount the weights deviate from 0.
+
+    Args:
+        which_layer: index of layer to sonify.
     """
 
     def __init__(self, which_layer=-1):
