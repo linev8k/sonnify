@@ -127,7 +127,10 @@ class WeightsDense(keras.callbacks.Callback):
         #adjust lfo depending on deviation of mean from 0
         self.deviation = np.absolute(self.init_weights_mean) * 200
         self.lfo = LFO(freq=self.deviation.tolist(), type=1, mul=1000, add=1200)
+        
+        
         self.osc = Sine(freq=harms, mul=0.5)
+#         self.har = Harmonizer(self.osc, transpo=-6)
         self.bp = ButBP(self.osc, freq=self.lfo)
 
         #initialize frequency shifter with 0 shift
