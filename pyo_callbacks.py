@@ -10,6 +10,17 @@ import numpy as np
 #after training it has to be stopped
 # s.stop()
 
+
+#store ratios for harmonic generation of sound
+#https://pages.mtu.edu/~suits/chords.html
+FREQUENCY_RATIOS = {'major' : [1,4,5,6],
+                    'minor' : [1,10,12,15],
+                    'dim' : [1,20,24,29],
+                    '7th' : [1,20,25,30,36],
+                    'min7th' : [1,10,12,15,18],
+                    'maj7th' : [1,8,10,12,15]
+                   }
+
 class ListenToLoss(keras.callbacks.Callback):
 
     """
@@ -107,18 +118,22 @@ class WeightsDense(keras.callbacks.Callback):
 
     Args:
         which_layer: index of layer to sonify.
+        base_freq: Base frequency to build harmonics on. Should be rather low.
+        harmony: Chord for sound generation. Can be: major, minor, dim [diminished], 7th, min7th, maj7th
     """
 
-    def __init__(self, which_layer=-1):
+    def __init__(self, which_layer=-1, base_freq=100, harmony='major'):
 
         #define layer to be sonified
         self.which_layer = which_layer
+        self.base_freq = base_freq
+        self.ratio = FREQUENCY_RATIOS[harmony]
 
     def on_train_begin(self, logs=None):
 
         #get output size of model and generate harmonies respectively
         streams = self.model.layers[-1].output_shape[self.which_layer]
-        harms = gen_harmonies(base_freq=200, ratio=[1,10,12,15,18], n_streams = streams)
+        harms = gen_harmonies(n_streams = streams, base_freq=self.base_freq, ratio=self.ratio)
 
         #get initial weights of layer
         init_weights = self.model.layers[self.which_layer].get_weights()[0]
@@ -127,7 +142,6 @@ class WeightsDense(keras.callbacks.Callback):
         #adjust lfo depending on deviation of mean from 0
         self.deviation = np.absolute(self.init_weights_mean) * 200
         self.lfo = LFO(freq=self.deviation.tolist(), type=1, mul=1000, add=1200)
-        
         
         self.osc = Sine(freq=harms, mul=0.5)
 #         self.har = Harmonizer(self.osc, transpo=-6)

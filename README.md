@@ -1,7 +1,7 @@
 # soNNify - Sonification of Neural Networks
 
 This project explores ways to sonify the training process of neural networks. The sound is audible in real-time during training, but can also be recorded along the way.
-It is still raw. The first demos can serve as a starting point for more ideas and approaches. TensorFlow's Keras provides the overall framework, audioprocessing is done with PYO, integrated into custom callbacks.
+It is still raw. The first demos can serve as a starting point for more ideas and approaches. TensorFlow's Keras provides the overall framework, audioprocessing is done with [PYO](https://github.com/belangeo/pyo), integrated into custom callbacks.
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ The general setup looks like this:
 After preparing the model and the data, boot a PYO server before training:
 ```python
 s = Server().boot()
-s.amp=0.2
+s.amp=0.2 #lower the gain
 s.start()
 ```
 
@@ -61,7 +61,3 @@ s.recstop()
 ```python
 s.stop()
 ```
-
-## Credits
-
-[PYO](https://github.com/belangeo/pyo)
