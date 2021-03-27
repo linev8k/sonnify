@@ -3,7 +3,7 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 import random
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 def get_mnist_data():
