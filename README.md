@@ -11,13 +11,12 @@ Install dependencies while creating a conda environment with
 conda env create -f sound_environment.yml
 ```
 If this doesn't work for you, just make sure the following packages are installed:
-`tensorflow` (Using [conda](https://anaconda.org/anaconda/tensorflow))
-`numpy` (Using [conda](https://anaconda.org/conda-forge/numpy))
-`pyo` (only available through [pip](https://pypi.org/project/pyo/))
+
+`tensorflow` (using [conda](https://anaconda.org/anaconda/tensorflow)), `numpy` (using [conda](https://anaconda.org/conda-forge/numpy)), `pyo` (only available through [pip](https://pypi.org/project/pyo/)).
 
 Refer to `sound_environment.yml` for versions.
 
-See also the [Conda Documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
+See also the [conda Documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 
 ## Content
 
