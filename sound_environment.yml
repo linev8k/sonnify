@@ -153,4 +153,3 @@ dependencies:
   - zstd=1.4.8=hf387650_1
   - pip:
     - pyo==1.0.3
-prefix: /Users/joceline/anaconda3/envs/sound
